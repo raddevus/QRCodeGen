@@ -7,22 +7,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using QRCoder;
 using System.Drawing;
-//using System.Drawing.Common;
 
 namespace QRCodeGen.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class QREncoder : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<QREncoder> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public QREncoder(ILogger<QREncoder> logger)
         {
             _logger = logger;
         }
@@ -46,9 +45,9 @@ namespace QRCodeGen.Controllers
         }
 
         [HttpGet("GenQR")]
-        public String GenQR(String textToEncode){
+        public String GenQR(String inText){
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(textToEncode, QRCodeGenerator.ECCLevel.Q);
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(inText, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
             String fileName = $"{Path.GetFileNameWithoutExtension(Path.GetTempFileName())}.jpg";
@@ -64,6 +63,14 @@ namespace QRCodeGen.Controllers
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(inText, QRCodeGenerator.ECCLevel.Q);
             AsciiQRCode qrCode = new AsciiQRCode(qrCodeData);
             return qrCode.GetGraphic(1);
+        }
+
+        [HttpGet("GetBase64QR")]
+        public String GetBase64QR(String inText){
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode("The text which should be encoded.", QRCodeGenerator.ECCLevel.Q);
+            Base64QRCode qrCode = new Base64QRCode(qrCodeData);
+            return qrCode.GetGraphic(20);
         }
     }
 }
