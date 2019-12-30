@@ -54,7 +54,8 @@ namespace QRCodeGen.Controllers
             String fullFileName = $".\\wwwroot\\{fileName}";
             Console.WriteLine(fileName);
             qrCodeImage.Save(fullFileName, System.Drawing.Imaging.ImageFormat.Jpeg);
-            return $"https://localhost:5001/{fileName}";
+            var pathBase = (Request.PathBase == String.Empty) ? String.Empty : $"{Request.PathBase}";
+            return $"https://{Request.Host.Value}{pathBase}/{fileName}";
         }
 
         [HttpGet("GetAsciiQR")]
