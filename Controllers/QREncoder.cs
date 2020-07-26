@@ -51,7 +51,7 @@ namespace QRCodeGen.Controllers
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
             String fileName = $"{Path.GetFileNameWithoutExtension(Path.GetTempFileName())}.jpg";
-            String fullFileName = $".\\wwwroot\\{fileName}";
+            String fullFileName = $"./wwwroot/{fileName}";
             Console.WriteLine(fileName);
             qrCodeImage.Save(fullFileName, System.Drawing.Imaging.ImageFormat.Jpeg);
             var pathBase = (Request.PathBase == String.Empty) ? String.Empty : $"{Request.PathBase}";

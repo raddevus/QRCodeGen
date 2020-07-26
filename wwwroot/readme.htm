@@ -26,5 +26,10 @@
         <li>Create ASCII QR -><a href="https://localhost:5001/QREncoder/GetAsciiQR?inText=this is a test">https://localhost:5001/QREncoder/GetAsciiQR?inText=this is a test</a></li>
         <li>Get Base64 encoded data of PNG file -><a href="https://localhost:5001/QREncoder/GetBase64QR?inText=this is a test">https://localhost:5001/QREncoder/GetBase64QR?inText=this is a test</a></li>
         </ul>
+        <h2>Linux Installation (Ubunutu)</h2>
+        <p> You may find it necessary to install the libgdiplus package if 
+            you get related errors.  The following fixed it for me:<br/>
+            <code>$ apt-get install -y libgdiplus</code>
+        </p>
     </body>
 </html>
