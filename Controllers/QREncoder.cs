@@ -69,7 +69,7 @@ namespace QRCodeGen.Controllers
         [HttpGet("GetBase64QR")]
         public String GetBase64QR(String inText){
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode("The text which should be encoded.", QRCodeGenerator.ECCLevel.Q);
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(inText, QRCodeGenerator.ECCLevel.Q);
             Base64QRCode qrCode = new Base64QRCode(qrCodeData);
             return qrCode.GetGraphic(20);
         }
