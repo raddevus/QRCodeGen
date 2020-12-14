@@ -17,6 +17,8 @@ namespace QRCodeGen
 {
     public class Startup
     {
+        readonly string allowSpecificOrigins = "allowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,6 +29,19 @@ namespace QRCodeGen
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: allowSpecificOrigins,
+                        builder =>
+                        {
+                            builder.WithOrigins("https://core-co-doc-ngkxu.ondigitalocean.app",
+                                "https://newlibre.com",
+                                "https://localhost:5001",
+                                "http://localhost:5000")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                        });
+            });
             services.AddControllers();
         }
 
@@ -44,7 +59,9 @@ namespace QRCodeGen
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            // UseCors() only works if you call it
+            // between the call to UseRouting and UseAuthorization()
+            app.UseCors();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

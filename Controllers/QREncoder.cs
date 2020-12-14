@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using QRCoder;
 using System.Drawing;
+using Microsoft.AspNetCore.Cors;
 
 namespace QRCodeGen.Controllers
 {
@@ -25,20 +26,8 @@ namespace QRCodeGen.Controllers
         {
             _logger = logger;
         }
-
-        [HttpGet("Get")]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
-        }
-
+        
+        [EnableCors("allowSpecificOrigins")]
         [HttpGet("GetDate")]
         public String GetDate(){
             return DateTime.Now.ToLongDateString();
@@ -65,7 +54,8 @@ namespace QRCodeGen.Controllers
             AsciiQRCode qrCode = new AsciiQRCode(qrCodeData);
             return qrCode.GetGraphic(1);
         }
-
+        
+        [EnableCors("allowSpecificOrigins")]        
         [HttpGet("GetBase64QR")]
         public String GetBase64QR(String inText){
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
