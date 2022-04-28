@@ -35,6 +35,7 @@ namespace QRCodeGen
                         builder =>
                         {
                             builder.WithOrigins("https://core-co-doc-ngkxu.ondigitalocean.app",
+                                "http://162.246.23.194/",
                                 "https://newlibre.com",
                                 "https://localhost:5001",
                                 "http://localhost:5000")
@@ -55,8 +56,6 @@ namespace QRCodeGen
 
             Console.WriteLine("in here...");
             Console.WriteLine(Directory.GetCurrentDirectory());
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
             // UseCors() only works if you call it
